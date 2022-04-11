@@ -4,16 +4,14 @@ const { Videogame, Genre, Platform } = require('../db')
 const { API_KEY } = process.env;
 const router = Router();
 
-
-const getApiDetail = async (id) => {
+const getApiGameDetail = async (id) => {
     const {data} = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
-    const infoDetail = {
+    const info = {
         id: data.id,
         name: data.name,
         background_image: data.background_image,
         genres: data.genres.map(gen => {
             return {
-                id: gen.id,
                 name: gen.name
             }
         }),
@@ -24,45 +22,33 @@ const getApiDetail = async (id) => {
             return plat.platform.name;
         })
     }
-    return infoDetail;
+    return info
 }
 
-const getDBDetail = async (id) => {
+const getDBGames = async (id) => {
     return await Videogame.findAll({
         where: {
-            id: `${id}`,
-            include: {
-                model: Genre,
-                attributes: ['name'],
-                through : {
-                    attributes: []
-                }
-            },
-            include: {
-                model: Platform,
-                attributes: ['name'],
-                through: {
-                    attributes: []
-                }
-            }
-        }
+            id: `${id}`
+        },
+        include: [
+            { model: Genre, attributes: ['name'] },
+            { model: Platform, attributes: ['name'] }
+        ]
+        
     })
 }
 
-const allDetails = async (id) => {
-    const apiDetail = await getApiDetail(id);
-    const dbDetail = await getDBDetail(id);
-    const details = apiDetail.concat(dbDetail);
-    return details
+const allGameDetail = async (id) => {
+    const apiDetail = await getApiGameDetail(id);
+    const dbDetail = await getDBGames(id);
+    const allDetail = apiDetail.concat(dbDetail);
+    return allDetail
 }
 
 router.get('/', async (req, res) => {
-    const { id } = req.params
-    if(id){
-        res.status(200).json(allDetails(id))
-    }else{
-        res.status(404).json({msg: 'game id not found'})
-    }
+    const { id } = req.params;
+    let detail = await allGameDetail(id)
+    res.status(200).json(detail)
 })
 
-module.exports = router;
+module.exports = router
