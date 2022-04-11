@@ -5,13 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -L",
-    "test": "mocha -w ./tests/**/*.spec.js"
+    "test": "mocha -w ./tests/*/.spec.js"
   },
   "author": "Henry",
   "license": "ISC",
   "engines": {
-    "node": ">=12.18.3",
-    "npm": ">=6.14.6"
+    "node": ">=12.13.0",
+    "npm": ">=6.12.0"
   },
   "dependencies": {
     "axios": "^0.26.1",
