@@ -13,17 +13,19 @@ router.post('/', async (req, res) => {
 
     const genreDB = await Genre.findAll({
         where: {
-            name: genreId
-        }
-    })
-
-    const platformDB = await Platform.findAll({
-        where: {
-            name: platformId
+            id: genreId
         }
     });
 
-    gameCreated.addGenre(genreDB)
+    const platformDB = await Platform.findAll({
+        where: {
+            id: platformId
+        }
+    })
+
+
+    await gameCreated.addGenre(genreDB);
+    await gameCreated.addPlatform(platformDB)
 
     res.status(200).send(gameCreated)
 });
