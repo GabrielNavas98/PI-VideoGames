@@ -36,12 +36,12 @@ const { Videogame, Platform, Genre } = sequelize.models;
 // Product.hasMany(Reviews);
 
 //videogame puede estar en muchos generos y genero puede puede tener muchos games
-Videogame.belongsToMany(Genre, { through: 'VideoGameGenre' });
-Genre.belongsToMany(Videogame, { through: 'VideoGameGenre' });
+Videogame.belongsToMany(Genre, { through: 'VideoGameGenre', timestamps: false });
+Genre.belongsToMany(Videogame, { through: 'VideoGameGenre', timestamps: false });
 
 //los juegos pueden estar disponibles en varias plaaformas y las plataformas tienen muchos juegos
-Videogame.belongsToMany(Platform, { through: 'VideoGamePlatform' });
-Platform.belongsToMany(Videogame, { through: 'VideoGamePlatform' });
+Videogame.belongsToMany(Platform, { through: 'VideoGamePlatform', timestamps: false });
+Platform.belongsToMany(Videogame, { through: 'VideoGamePlatform', timestamps: false });
 
 
 

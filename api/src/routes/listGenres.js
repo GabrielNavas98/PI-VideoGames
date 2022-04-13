@@ -22,7 +22,7 @@ const apiGenre = async () => {
 
 router.get('/', async (req, res) => {
     try{
-        res.status(200).json(apiGenre())
+        res.status(200).json(await apiGenre())
     }catch(err){
         res.sendStatus(404)
     }

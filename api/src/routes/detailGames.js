@@ -6,6 +6,7 @@ const router = Router();
 
 const getApiGameDetail = async (id) => {
     const {data} = await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+    //console.log(data) me trae el detail del juego
     const info = {
         id: data.id,
         name: data.name,
@@ -22,33 +23,54 @@ const getApiGameDetail = async (id) => {
             return plat.platform.name;
         })
     }
+    //console.log(info) //me trae la info correctamente
     return info
 }
 
+
 const getDBGames = async (id) => {
-    return await Videogame.findAll({
-        where: {
-            id: `${id}`
-        },
+    let gameDB = await Videogame.findByPk(id, {
         include: [
-            { model: Genre, attributes: ['name'] },
-            { model: Platform, attributes: ['name'] }
-        ]
-        
+            {
+                model: Genre,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
+            },
+            {
+                model: Platform,
+                attributes: ['name'],
+                through: {
+                    attributes: []
+                }
+            }
+        ]        
     })
+    return gameDB
 }
 
-const allGameDetail = async (id) => {
-    const apiDetail = await getApiGameDetail(id);
-    const dbDetail = await getDBGames(id);
-    const allDetail = apiDetail.concat(dbDetail);
-    return allDetail
-}
 
-router.get('/', async (req, res) => {
+
+
+
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    let detail = await allGameDetail(id)
-    res.status(200).json(detail)
+    if(id.length < 6 ){
+        try{
+            res.status(200).json(await getApiGameDetail(id))
+        }catch(err){
+            res.status(400).json({msg: 'err'})
+        }
+    }else {
+        try{
+            res.status(200).json(await getDBGames(id))
+        }catch(err){
+            res.status(400).json({msg: 'errdb'})
+        }
+    }
 })
+
+//localhost:3001/videogame/id=3498
 
 module.exports = router

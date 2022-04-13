@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const axios = require('axios');
-const { Videogame, Genre } = require('../db')
+const { Videogame, Genre, Platform } = require('../db')
 const { API_KEY } = process.env;
 const router = Router();
 
@@ -31,13 +31,20 @@ const getApiGames = async () => {
 
 const getDBGames = async () => {
     return await Videogame.findAll({
-        include: {
+        include: [{
             model: Genre,
             attributes: ['name'],
             through: {
               attributes: []
             }
-        }
+        },
+        {
+            model: Platform,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
+        }]
     })
 }
 
