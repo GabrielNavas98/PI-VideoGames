@@ -1,16 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+import n from './NavBar.module.css'
 
 import SearchBar from "../SearchBar/SearchBar";
 
 
 export default function NavBar () {
     return (
-        <div>
-            <Link exact to="/create">Create VideoGame</Link>
-            <Link exact to="/home">Home</Link>
-            <SearchBar/>
-            <h1>soy el Nav</h1>
-        </div>
+        <nav className={n.navbar}>
+            <div>
+                <ul className={n.list}>
+                    <li className={n.list_item}>
+                    <NavLink exact to="/create">Create VideoGame</NavLink>
+                    <NavLink exact to="/home">Home</NavLink>
+                    <SearchBar />
+                    </li>
+                </ul>
+            </div>
+        </nav>
     )
 }

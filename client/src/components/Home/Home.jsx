@@ -1,8 +1,9 @@
 import React from "react";
 import {useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import { getAllVideogames, getGenres, filterByGenres } from "../../redux/actions";
 import { Link } from "react-router-dom";
+import { getAllVideogames, getGenres, filterByGenres, filterByDbApi, orderByAZ, orderByRating } from "../../redux/actions";
+
 
 import NavBar from "../NavBar/NavBar";
 import Paginado from "../Paginado/Paginado";
@@ -13,6 +14,7 @@ export default function Home () {
     const allVideogames = useSelector((state) => state.videoGames) //como mapear las props
     const allGenres = useSelector((state) => state.genres)
     
+    const [order, setOrder] = useState('')
     const [currentPg, setCurrentPg] = useState(1);
     const [gamesPerPg, setGamesPerPg] = useState(15); //15 videojuegos por pagina
     const lastGame = currentPg * gamesPerPg;
@@ -41,17 +43,36 @@ export default function Home () {
         dispatch(filterByGenres(e.target.value))
         // console.log(e.target.value)
     }
+    
+    function handleFilterDbApi(e){
+        e.preventDefault();
+        dispatch(filterByDbApi(e.target.value))
+    }
+
+    function handleOrderAZ(e){
+        e.preventDefault();
+        dispatch(orderByAZ(e.target.value));
+        setCurrentPg(1); //setea la primera pagina
+        setOrder(`Ordenado ${e.target.value}`)
+    }
+
+    function handleOrderRating(e){
+        e.preventDefault();
+        dispatch(orderByRating(e.target.value))
+        setCurrentPg(1); //setea la primera pagina
+        setOrder(`Ordenado ${e.target.value}`)
+    }
+
 
     return(
         <div>
             <NavBar/>
-            <Link to='/videogame'>Videogame Create</Link>
             <h1>VideoGames</h1>
             <button onClick={e=> {handleClick(e)}}>
                 Refresh
             </button>
             <div>
-                <select>
+                <select onChange={e => handleFilterDbApi(e)}>
                     <option value='all'>All</option>
                     <option value='db'>DataBase</option>
                     <option value='api'>API</option>
@@ -66,10 +87,13 @@ export default function Home () {
                         })
                     }
                 </select>
-                <select>
+                <select onChange={e => handleOrderAZ(e)}>
                     <option value= 'asc'>A-Z</option>
                     <option value= 'desc'>Z-A</option>
-                    <option value= 'rating'>Rating</option>
+                </select>
+                <select onChange={e => handleOrderRating(e)}>
+                    <option value= 'asc'>asc</option>
+                    <option value= 'desc'>desc</option>
                 </select>
                 <div>
                     <Paginado 
@@ -82,10 +106,16 @@ export default function Home () {
                     currentGame && currentGame.length && currentGame.map(game => {
                         
                         return(
-                            <div>
-                            <Link to={'/home'} > 
-                                <VideogameCard name={game.name} img={game.background_image} id={game.id} genres={game.genres.map(gen => gen.name).join(", ")}/>
-                            </Link>                            
+                            <div className='card'>
+                                <Link to={`/home/${game.id}`} >
+                                    <VideogameCard 
+                                        name={game.name}
+                                        img={game.background_image}
+                                        id={game.id}
+                                        genres={game.genres.map(gen => gen.name).join(", ")}
+                                        key={game.id}
+                                        />                        
+                                </Link>
                             </div>
                         )
                     })

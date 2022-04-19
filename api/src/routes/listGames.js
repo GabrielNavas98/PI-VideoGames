@@ -22,6 +22,14 @@ const getApiGames = async () => {
                     id: gen.id,
                     name: gen.name
                 }
+            }),
+            released: game.released,
+            rating: game.rating,
+            platform: game.parent_platforms.map(elem => {
+                return {
+                    id: elem.platform.id,
+                    name: elem.platform.name                    
+                }    
             })
         }
     })

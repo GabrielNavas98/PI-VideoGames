@@ -1,0 +1,23 @@
+#inpSearch{
+    margin-top: 30px;
+    border-radius: 5px;
+    color: #6f706f;
+    outline-color: #198754;
+}
+#btnSearch{
+    margin-left: 5px;
+    position: relative;
+    padding: .25em .5em;
+    background-color: #198754;
+    border: #198754;
+    border-radius: 3px 6px;
+    transition: 0.2s;
+    font-size: 15px;
+    color: antiquewhite;
+    outline: none;
+}
+#btnSearch:hover{
+    border: solid 1px #198754;
+    box-shadow: 0 8px 16px;
+    transition: 2s;
+}
