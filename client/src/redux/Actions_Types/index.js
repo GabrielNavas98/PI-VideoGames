@@ -1,0 +1,3 @@
+export const GET_ALL_VIDEOGAMES = 'GET_ALL_VIDEOGAMES';
+export const GET_GENRES = 'GET_GENRES';
+export const FILTER_BY_GENRES = 'FILTER_BY_GENRES';
