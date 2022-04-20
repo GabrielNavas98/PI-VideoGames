@@ -12,7 +12,7 @@ export default function NavBar () {
             <div>
                 <ul className={n.list}>
                     <li className={n.list_item}>
-                    <NavLink exact to="/create">Create VideoGame</NavLink>
+                    <NavLink exact to="/videogame/">Create VideoGame</NavLink>
                     <NavLink exact to="/home">Home</NavLink>
                     <SearchBar />
                     </li>

@@ -1,10 +1,11 @@
-import { GET_ALL_VIDEOGAMES, GET_GENRES, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID } from '../Actions_Types/index'
+import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME } from '../Actions_Types/index'
 
 const initialState = {
-    videoGames: [],
-    allVideoGames: [],
-    genres: [],
-    gameDetail: []
+    videoGames: [], //store que renderizo
+    allVideoGames: [],  //store que siempre tiene todos los games
+    genres: [], //generos
+    platforms: [], //plataformas
+    gameDetail: [] //detalle
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const rootReducer = (state = initialState, action) => {
             return{
                 ...state,
                 genres: action.payload
+            }
+        case GET_PLATFORMS:
+            return{
+                ...state,
+                platforms: action.payload
             }
         case GET_VIDEOGAME_NAME:
             return{
@@ -97,6 +103,12 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 videoGames: orderByRating
             }
+        
+        case CREATE_GAME:
+            return{
+                ...state
+            }
+        
         default:
                 return state
     };

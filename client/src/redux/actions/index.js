@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_VIDEOGAMES, GET_GENRES, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID } from '../Actions_Types/index'
+import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME } from '../Actions_Types/index'
 
 
 
@@ -18,6 +18,16 @@ export function getGenres (){
         var json = await axios.get(`http://localhost:3001/genres`);
         return dispatch({
             type: GET_GENRES,
+            payload: json.data
+        })
+    }
+}
+
+export function getPlatforms (){
+    return async function(dispatch){
+        var json = await axios.get(`http://localhost:3001/platforms`);
+        return dispatch({
+            type: GET_PLATFORMS,
             payload: json.data
         })
     }
@@ -79,4 +89,27 @@ export function orderByRating(payload){
     }
 }
 
+export function createGame(payload){
+    return async function(dispatch){
+        const json = await axios.post(`http://localhost:3001/videogame`, payload)
+        //console.log(json)
+        return dispatch({
+            type: CREATE_GAME,
+            payload: json.data
+        })
+    }
+}
+
+// export function postPokemon(payload) {
+//     return async function (dispatch) {
+//       const response = await axios.post(
+//         "/pokemons/",
+//         payload
+//       );
+//       return dispatch({
+//         type: "POST_POKEMON",
+//         payload: response.data,
+//       });
+//     };
+//   }
 

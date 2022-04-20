@@ -29,7 +29,7 @@ const getApiGameDetail = async (id) => {
 
 
 const getDBGames = async (id) => {
-    let gameDB = await Videogame.findByPk(id, {
+    let game = await Videogame.findByPk(id, {
         include: [
             {
                 model: Genre,
@@ -47,7 +47,24 @@ const getDBGames = async (id) => {
             }
         ]        
     })
-    return gameDB
+    let infoDB = {
+        id: game.id,
+        name: game.name,
+        background_image: game.background_image,
+        genres: game.genres.map(gen => {
+            return {
+                name: gen.name
+            }
+        }),
+        description: game.description,
+        released: game.released,
+        rating: game.rating,
+        platforms: game.platforms.map(plat => {
+            return plat.name;
+        })
+
+    }
+    return infoDB
 }
 
 
@@ -56,7 +73,7 @@ const getDBGames = async (id) => {
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    if(id.length < 6 ){
+    if(id.length < 6){
         try{
             res.status(200).json(await getApiGameDetail(id))
         }catch(err){
