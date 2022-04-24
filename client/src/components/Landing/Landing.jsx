@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
-import './Landing.css'
+import style from './Landing.module.css'
 
 function Landing () {
         return (
-                <div className='full-inner'>
+                <div className={style.container}>
                     <h1>Welcome to VIDEOGAMES</h1>
                     <Link to="/home">
-                        <button>Home</button>
+                        <button className={style.btn_land}>Home</button>
                     </Link>
                 </div>
         )

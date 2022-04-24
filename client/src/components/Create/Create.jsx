@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from 'react';
 import {useDispatch, useSelector} from 'react-redux'
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { createGame, getGenres, getPlatforms } from "../../redux/actions";
 
-//import NavBar from "../NavBar/NavBar";
+// import addImg from './add_Img.png'
+import NavBar from "../NavBar/NavBar";
+import style from './Create.module.css'
 
 export function validate(input){
     let errors = {};
@@ -18,23 +20,15 @@ export function validate(input){
         errors.description = 'Description must be more than 10 caracters'
     }
 
-    if (!input.platforms) {
+    if (!input.platforms.length) {
         errors.platforms = 'Add even one'
         //console.log(input.platforms.length)
     }
-
-    if(typeof input.rating !== 'number'){
-        errors.rating = 'Rating must be number' 
-    } else if (input.rating > 5 || input.rating < 0 ){
+    
+    if (input.rating > 5 || input.rating < 0 ){
         errors.rating = 'Rating must be in range 0-5'
-    }   
-
-    let exp = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/
-    let regex = new RegExp(exp)
-    if(!input.background_image.match(regex)){
-        errors.background_image = 'Add an URL Image'
-    }
-
+    } 
+    
     return errors
 }
 
@@ -52,24 +46,24 @@ export default function Create () {
         name: '',
         description: '',
         released: '',
-        rating: 0,
+        rating: '',
         background_image: '',
         genres: [],
         platforms: []
     })
-
-
+    
 
     useEffect(() => {
         dispatch(getGenres())
         dispatch(getPlatforms())
-    }, [])
+    }, [dispatch])
 
     function handleOnSubmit(e){
         //SUBMIT
         e.preventDefault();
         //console.log(e)
         console.log(input)
+        //if--------
         dispatch(createGame(input))
         alert('VideoGame Created')
         setInput({
@@ -99,142 +93,164 @@ export default function Create () {
     }
 
     function handleSelectGenres(e){
-        setInput({
-            ...input,
-            genres: [...input.genres, e.target.value]
-        })
+        //console.log(e.target.value)
+        let aux = e.target.value
+        if(input.genres.includes(e.target.value)){ 
+            let filtrados = input.genres.filter(e => e !== aux)
+            setInput({
+                ...input,
+                genres: filtrados
+            })
+            //console.log('esta')
+        }else if(!input.genres.includes(e.target.value)){
+            //console.log('no esta')
+            setInput({
+                ...input,
+                genres: [...input.genres, e.target.value]
+            })
+        }
         //console.log(input.genres)
     }
 
     function handleSelectPlatforms(e){
-        setInput({
-            ...input,
-            platforms: [...input.platforms, e.target.value]
-        })
+        let aux = e.target.value
+        if(input.platforms.includes(e.target.value)){ 
+            let filtrados = input.platforms.filter(e => e !== aux)
+            setInput({
+                ...input,
+                platforms: filtrados
+            })
+            //console.log('esta')
+        }else if(!input.platforms.includes(e.target.value)){
+            //console.log('no esta')
+            setInput({
+                ...input,
+                platforms: [...input.platforms, e.target.value]
+            })
+        }
         setErrors(validate({
             ...input,
             platforms: [...input.platforms, e.target.value]
         }))
         //console.log(input.platforms)
-        
     }
-
 
     return(
         <div>
-            <Link to = '/home'>
-              <button>Volver</button>
-            </Link>
-            <h1>Create Videogame</h1>
-            <form onSubmit={(e) => handleOnSubmit(e)}>
-                <div>
-                    <label>Name: </label>
-                    <input 
-                        type='text'
-                        name="name"
-                        value={input.name}
-                        onChange={(e) => handleChange(e)}    
-                    />
+            <NavBar/>
+            <form  className={style.box} onSubmit={(e) => handleOnSubmit(e)}>
+                <h1>Create your Game</h1>
+            <div className={style.subBox}>
+                <input 
+                    type='text'
+                    name="name"
+                    value={input.name}
+                    placeholder='Name'
+                    onChange={(e) => handleChange(e)}    
+                />
+                {
+                    errors.name && (
+                        <p>{errors.name}</p>
+                    )
+                }
+                <input 
+                    type='text'
+                    name= 'description'
+                    value={input.description}
+                    placeholder='Description'
+                    onChange={(e) => handleChange(e)}
+                />
+                {
+                    errors.description && (
+                        <p>{errors.description}</p>
+                    )
+                }
+            </div>
+            <div className={style.subBox}>
+                <input
+                    type='date'
+                    name="released"
+                    value={input.released}
+                    placeholder='Released'
+                    onChange={(e) => handleChange(e)}
+                />
+                <input 
+                    type='text'
+                    name="rating"
+                    value={input.rating}
+                    placeholder='Rating'
+                    onChange={(e) => handleChange(e)}
+                />
+                {
+                    errors.rating && (
+                        <p>{errors.rating}</p>
+                    ) 
+                }
+            </div>
+            <div className={style.subBox}>
+                <input 
+                    type='text'
+                    name="background_image"
+                    value={input.background_image}
+                    placeholder='Url Image'
+                    onChange={(e) => handleChange(e)}
+                />
                     {
-                        errors.name && (
-                            <p>{errors.name}</p>
-                        )
+                        input.background_image ? 
+                            <img src={input.background_image} alt='' className={style.bg_img}/>
+                        :   
+                            <img src='https://static.thenounproject.com/png/3322766-200.png' alt=''  className={style.bg_img}/>
                     }
-                </div>
-                <br/>
-                <div>
-                    <label>Description: </label>
-                    <input 
-                        type='text'
-                        name= 'description'
-                        value={input.description}
-                        onChange={(e) => handleChange(e)}
-                    />
-                    {
-                        errors.description && (
-                            <p>{errors.description}</p>
-                        )
-                    }
-                </div>
-                <br/>
-                <div>
-                    <label>Released: </label>
-                    <input
-                        type='date'
-                        name="released"
-                        value={input.released}
-                        onChange={(e) => handleChange(e)}
-                    />
-                </div>
-                <br/>
-                <div>
-                    <label>Rating: </label>
-                    <input 
-                        type='text'
-                        name="rating"
-                        value={input.rating}
-                        onChange={(e) => handleChange(e)}
-                    />
-                    {
-                      errors.rating && (
-                            <p>{errors.rating}</p>
-                        ) 
-                    }
-                </div>
-                <br/>
-                <div>
-                    <label>Image: </label>
-                    <input 
-                        type='text'
-                        name="background_image"
-                        value={input.background_image}
-                        onChange={(e) => handleChange(e)}
-                    />
-                    {
-                      errors.background_image && (
-                            <p>{errors.background_image}</p>
-                        ) 
-                    }
-                </div>
-                <br/>
-                <div>
-                <label>Genres: </label>
-                    <select onChange={(e) => handleSelectGenres(e)}>
+            </div>
+            <div className={style.subBox}>
+                <select onChange={(e) => handleSelectGenres(e)} className= {style.select} placeholder='Genres: ' multiple>
                     {
                         genres?.map(gen => {
                             return(
-                                <option name='genres' value={gen.name} >{gen.name}</option>
+                                <option name='genres' key={gen.id} value={gen.name}>{gen.name}</option>
                             )
                         })
                     }
-                    </select>
-                    <ul><li>{input.genres?.map(gen => gen + ', ')}</li></ul>
-                     
-                </div>
-                <br/>
-                <div>
-                    <label>Platforms: </label>
-                    <select onChange={(e) => handleSelectPlatforms(e)}>
+                </select>
+               <div>
+               <ul className={style.bg_img}>
+                {
+                        input.genres?.map(gen => {
+                        return(
+                            <li key={gen}>{gen}</li>
+                        )
+                    })
+                }
+                </ul>
+               </div>
+            </div>
+            <div className={style.subBox}>
+                <select onChange={(e) => handleSelectPlatforms(e)} className= {style.select} multiple>
                     {
                         platforms?.map(plat => {
                             return(
-                                <option name='platforms' value={plat.name} >{plat.name}</option>
+                                <option name='platforms' key={plat.id} value={plat.name} >{plat.name}</option>
                             )
                         })                    
                     }
-                    </select>
-                    <ul><li>{input.platforms.map(plat => plat + ', ')}</li></ul>
+                </select>
+                <div className={style.bg_img}>
+                {
+                    errors.platforms ? <p>{errors.plataforms}</p>:
+                    <ul>
                     {
-                        errors.platforms && (
-                            <p>{errors.platforms}</p>
-                        ) 
+                        input.platforms?.map(plat => {
+                                return (
+                                    <li>{plat}</li>
+                                )  
+                                })
                     }
-                    
+                    </ul>
+                }
                 </div>
-                <br/>
-                <button type= 'submit' disabled={errors.name || errors.description || errors.platforms || errors.rating || errors.background_image}>Create</button>
+            </div>
+            <button className={style.submit} type= 'submit' disabled={!input.name || !input.description || !input.rating || !input.platforms.length || errors.rating || errors.description || errors.platforms}>Create</button>
             </form>
         </div>
-
     )
 }

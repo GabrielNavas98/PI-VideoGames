@@ -11,24 +11,27 @@ router.post('/', async (req, res) => {
         name, description, released, rating, background_image, inBd
     });
 
+    try{
+        const genreDB = await Genre.findAll({
+            where: {
+                name: genres
+            }
+        });
     
-    const genreDB = await Genre.findAll({
-        where: {
-            name: genres
-        }
-    });
-
-    const platformDB = await Platform.findAll({
-        where: {
-            name: platforms
-        }
-    })
-
-
-    await gameCreated.addGenre(genreDB);
-    await gameCreated.addPlatform(platformDB)
-
-    res.status(200).send(gameCreated)
+        const platformDB = await Platform.findAll({
+            where: {
+                name: platforms
+            }
+        })
+    
+    
+        await gameCreated.addGenre(genreDB);
+        await gameCreated.addPlatform(platformDB)
+    
+        res.status(200).send(gameCreated)
+    }catch(err){
+        res.status(400).send(err)
+    }
 });
 
 

@@ -8,16 +8,16 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export default function NavBar () {
     return (
-        <nav className={n.navbar}>
+        <header className={n.navbar}>
             <div>
-                <ul className={n.list}>
-                    <li className={n.list_item}>
-                    <NavLink exact to="/videogame/">Create VideoGame</NavLink>
-                    <NavLink exact to="/home">Home</NavLink>
-                    <SearchBar />
-                    </li>
-                </ul>
+                <NavLink exact to="/videogame/" className={n.link} activeClassName={n.active}>Create VideoGame</NavLink>
             </div>
-        </nav>
+            <div>
+                <NavLink exact to="/home" className={n.link} activeClassName={n.active}>Home</NavLink>
+            </div>
+            <div>
+                <SearchBar />             
+            </div>
+        </header>
     )
 }

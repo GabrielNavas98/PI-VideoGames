@@ -1,4 +1,4 @@
-import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME } from '../Actions_Types/index'
+import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME, CLEANDETAIL } from '../Actions_Types/index'
 
 const initialState = {
     videoGames: [], //store que renderizo
@@ -51,6 +51,20 @@ const rootReducer = (state = initialState, action) => {
                 }
             }
             var filtrados = action.payload === 'all' ? allVideoGames : allVideoGames.filter(e => genFilter(e.genres)) //filtro el state que siempre tiene 
+            //console.log(filtrados)
+            //si no hay juegos con el genero creo un detalle
+            if(filtrados.length === 0){
+                filtrados = [{
+                    id: 5050505050,
+                    name: '404 not found Game with this Genre',
+                    background_image: 'https://cdn.dribbble.com/users/1864713/screenshots/16840895/image_processing20211111-19258-d9egog_4x.gif?compress=1&resize=400x300',
+                    genres:[{id: 404, name:'NotFound'}],
+                    released: '02/02/1998',
+                    rating: 5,
+                    platforms: [{id: 404, name:'NotFound'}],
+                }]
+            }
+            //console.log(filtrados)
             return{
                 ...state,
                 videoGames: filtrados //renderizo el state pisable
@@ -107,6 +121,12 @@ const rootReducer = (state = initialState, action) => {
         case CREATE_GAME:
             return{
                 ...state
+            }
+        
+        case CLEANDETAIL:
+            return{
+                ...state,
+                gameDetail: []
             }
         
         default:

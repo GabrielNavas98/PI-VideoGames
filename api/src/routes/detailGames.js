@@ -73,17 +73,17 @@ const getDBGames = async (id) => {
 
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
-    if(id.length < 6){
+    if(id.length < 10){
         try{
             res.status(200).json(await getApiGameDetail(id))
         }catch(err){
-            res.status(400).json({msg: 'err'})
+            res.status(404).json({msg: `Game ${id} not found in API`})
         }
     }else {
         try{
             res.status(200).json(await getDBGames(id))
         }catch(err){
-            res.status(400).json({msg: 'errdb'})
+            res.status(404).json({error : err.message})
         }
     }
 })

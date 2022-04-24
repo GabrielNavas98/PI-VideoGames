@@ -1,4 +1,10 @@
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import React from 'react';
+
+
+// import { useDispatch } from "react-redux";
+// import { useEffect } from 'react';
+//import { getAllVideogames } from './redux/actions';
 
 import './App.css';
 
@@ -9,6 +15,11 @@ import Create from './components/Create/Create';
 // import VideogameCreate from './components/VideogameCreate/VideogameCreate'
 
 function App() {
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(getAllVideogames())
+  // }, [dispatch])
+  
   return (
     <BrowserRouter>
       <div className="App">

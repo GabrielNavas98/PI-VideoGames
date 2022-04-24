@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME } from '../Actions_Types/index'
+import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME, CLEANDETAIL } from '../Actions_Types/index'
 
 
 
@@ -56,7 +56,8 @@ export function getGameId(id) {
                 payload: json.data
             })
         }catch (error) {
-            console.log(error)
+            console.log(error.message)
+            
         }
     }
 }
@@ -97,6 +98,12 @@ export function createGame(payload){
             type: CREATE_GAME,
             payload: json.data
         })
+    }
+}
+
+export function limpiarDetail(){
+    return {
+        type: CLEANDETAIL
     }
 }
 

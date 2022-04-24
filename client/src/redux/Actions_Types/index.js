@@ -11,3 +11,6 @@ export const ORDER_BY_AZ = 'ORDER_BY_AZ';
 export const ORDER_BY_RATING = 'ORDER_BY_RATING';
 
 export const CREATE_GAME = 'CREATE_GAME';
+
+
+export const CLEANDETAIL = 'CLEANDETAIL'
