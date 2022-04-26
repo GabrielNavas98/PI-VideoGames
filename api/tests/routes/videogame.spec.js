@@ -5,20 +5,41 @@ const app = require('../../src/app.js');
 const { Videogame, conn } = require('../../src/db.js');
 
 const agent = session(app);
-const videogame = {
-  name: 'Super Mario Bros',
-};
 
-describe('Videogame routes', () => {
-  before(() => conn.authenticate()
-  .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  }));
-  beforeEach(() => Videogame.sync({ force: true })
-    .then(() => Videogame.create(videogame)));
-  describe('GET /videogames', () => {
-    it('should get 200', () =>
-      agent.get('/videogames').expect(200)
-    );
+
+
+describe('Test de routes', () => {
+  
+  describe('GET /genres', () => {
+    it('responds with 200', () => 
+      agent.get('/genres').expect(200));
   });
-});
+
+  describe('POST /videogame', () => {
+    it ('responds with 400 if not send name', () => 
+      agent.post('/videogame')
+        .send({description:'test de routes', released:'02/02/1998', platforms:'PC'})
+        .then((res) => {
+          expect(400)
+        })
+    );
+    
+    it ('responds with 200 if send name, description, platforms', () => 
+    agent.post('/videogame')
+      .send({description:'test de routes', released:'02/02/1998', platforms:'PC'})
+      .then((res) => {
+        expect(200)
+      })
+  );
+
+    it ('responds with an object if send name, description, platforms', () => {
+      agent.post('/videogame')
+        .send({name:'test', description:'test de routes', platforms:'PC' })
+        .then((res) => {
+          expect(res.body).toEqual({name:'test', description:'test de routes', platforms:'PC'})
+        })
+    })
+  });
+
+})
+
