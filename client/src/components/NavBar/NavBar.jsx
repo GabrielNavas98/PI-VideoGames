@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 import n from './NavBar.module.css'
 
 import SearchBar from "../SearchBar/SearchBar";
@@ -9,11 +9,15 @@ import { getAllVideogames, getGenres } from "../../redux/actions";
 
 
 export default function NavBar () {
+    
     const dispatch = useDispatch()
+    const history = useHistory()
+
     function handleRefresh(e){
             e.preventDefault();
             dispatch(getAllVideogames());
             dispatch(getGenres())
+            history.push('/home')
         }
     return (
         <header className={n.navbar}>

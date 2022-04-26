@@ -4,7 +4,7 @@ import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER
 
 export function getAllVideogames (){
     return async function(dispatch){
-        var json = await axios.get (`http://localhost:3001/videogames`);
+        var json = await axios.get (`/videogames`);
         return dispatch({
             type: GET_ALL_VIDEOGAMES,
             payload: json.data
@@ -14,7 +14,7 @@ export function getAllVideogames (){
 
 export function getGenres (){
     return async function (dispatch){
-        var json = await axios.get(`http://localhost:3001/genres`);
+        var json = await axios.get(`/genres`);
         return dispatch({
             type: GET_GENRES,
             payload: json.data
@@ -24,7 +24,7 @@ export function getGenres (){
 
 export function getPlatforms (){
     return async function(dispatch){
-        var json = await axios.get(`http://localhost:3001/platforms`);
+        var json = await axios.get(`/platforms`);
         return dispatch({
             type: GET_PLATFORMS,
             payload: json.data
@@ -35,7 +35,7 @@ export function getPlatforms (){
 export function getGameName(name) {
     return async function(dispatch){
         try{
-            var json = await axios.get(`http://localhost:3001/videogames?name=${name}`)
+            var json = await axios.get(`/videogames?name=${name}`)
             return dispatch({
                 type: GET_VIDEOGAME_NAME,
                 payload: json.data
@@ -49,7 +49,7 @@ export function getGameName(name) {
 export function getGameId(id) {
     return async function(dispatch){
         try{
-            var json = await axios.get(`http://localhost:3001/videogames/${id}`)
+            var json = await axios.get(`/videogames/${id}`)
             return dispatch({
                 type: GET_GAME_BY_ID,
                 payload: json.data
@@ -90,7 +90,8 @@ export function orderByRating(payload){
 
 export function createGame(payload){
     return async function(dispatch){
-        const json = await axios.post(`http://localhost:3001/videogame`, payload)
+        //cambio url para deploy
+        const json = await axios.post(`/videogame`, payload)
         //console.log(json)
         return dispatch({
             type: CREATE_GAME,
@@ -105,16 +106,4 @@ export function limpiarDetail(){
     }
 }
 
-// export function postPokemon(payload) {
-//     return async function (dispatch) {
-//       const response = await axios.post(
-//         "/pokemons/",
-//         payload
-//       );
-//       return dispatch({
-//         type: "POST_POKEMON",
-//         payload: response.data,
-//       });
-//     };
-//   }
 

@@ -7,7 +7,7 @@ import style from './Detail.module.css'
 
 import { getGameId, limpiarDetail } from "../../redux/actions";
 import Loader from "../Loader/Loader";
-import Error404 from "../Error404/Error404";
+
 
 export default function Detail (props){
     //console.log(props)
