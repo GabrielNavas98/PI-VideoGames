@@ -22,17 +22,20 @@ export default function SearchBar () {
         e.preventDefault()
         history.push('/home')
         dispatch(getGameName(name))
-    }
+    }   
 
     return (
         <div className={style.search}>
             <input
-            className={style.inpSearch} 
-            type='text'
-            placeholder= 'Search...'
-            onChange={(e) => handleInputChange(e)}
+                className={style.inpSearch} 
+                type='text'
+                placeholder= 'Search...'
+                onChange={(e) => handleInputChange(e)}
+                onClick={e => handleSubmit(e)} onKeyPress={(e => {
+                    if(e.key === 'Enter') dispatch(getGameName(name))  
+                })}
             />
-            <button className={style.btn} type="submit" onClick={e => handleSubmit(e)}><img src={lupa} alt=''/></button>
+            <button className={style.btn} type="submit" ><img src={lupa} alt=''/></button>
             
         </div>
     )

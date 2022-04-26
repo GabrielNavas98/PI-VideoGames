@@ -104,6 +104,7 @@ export default function Home () {
                 gamesPerPg = {gamesPerPg}
                 allVideogames = {allVideogames.length}
                 paginado= {paginado}
+                currentPg = {currentPg}
             />            
             {
                 currentGame && currentGame.length ?

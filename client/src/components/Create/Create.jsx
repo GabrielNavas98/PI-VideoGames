@@ -73,7 +73,8 @@ export default function Create () {
             rating: 0,
             background_image: '',
             genres: [],
-            platforms: []
+            platforms: [],
+            inBd: true
         })
         history.push('/home')
     }
@@ -175,7 +176,7 @@ export default function Create () {
                     onChange={(e) => handleChange(e)}
                 />
                 <input 
-                    type='text'
+                    type='number'
                     name="rating"
                     value={input.rating}
                     placeholder='Rating'
@@ -241,7 +242,7 @@ export default function Create () {
                     {
                         input.platforms?.map(plat => {
                                 return (
-                                    <li>{plat}</li>
+                                    <li key={plat}>{plat}</li>
                                 )  
                                 })
                     }

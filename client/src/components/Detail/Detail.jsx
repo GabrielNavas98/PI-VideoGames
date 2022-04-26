@@ -7,6 +7,7 @@ import style from './Detail.module.css'
 
 import { getGameId, limpiarDetail } from "../../redux/actions";
 import Loader from "../Loader/Loader";
+import Error404 from "../Error404/Error404";
 
 export default function Detail (props){
     //console.log(props)
@@ -19,7 +20,7 @@ export default function Detail (props){
     },[props.match.params.id, dispatch])
 
     const myGameDetail = useSelector((state) => state.gameDetail)
-    console.log(myGameDetail)
+    //console.log(myGameDetail)
 
     return(
         <div>
@@ -73,7 +74,7 @@ export default function Detail (props){
                         </div>
                     </div>
                 </div> : 
-                <Loader/>
+                <Loader/>                
             }
         </div> 
     )

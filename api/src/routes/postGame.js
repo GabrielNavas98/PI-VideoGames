@@ -7,11 +7,11 @@ router.post('/', async (req, res) => {
     const { name, description, released, rating, platforms, genres, background_image, inBd } = req.body;
     //console.log(name)
     
+    try{
     const gameCreated = await  Videogame.create({
         name, description, released, rating, background_image, inBd
     });
 
-    try{
         const genreDB = await Genre.findAll({
             where: {
                 name: genres

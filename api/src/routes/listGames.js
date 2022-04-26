@@ -104,7 +104,6 @@ router.get('/', async (req, res) => {
 
     //si me pasan 'name: ....' por query
     if (name){
-        //let gamesName = games.filter(game => game.name.toLowerCase().includes(name.toLowerCase()))
         let games = await getGamesName(name) //uso la ruta de la api
         games.splice(15)
         if(games.length){

@@ -12,13 +12,10 @@ import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
 import Detail from './components/Detail/Detail';
 import Create from './components/Create/Create';
-// import VideogameCreate from './components/VideogameCreate/VideogameCreate'
+import Error404 from './components/Error404/Error404';
+
 
 function App() {
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(getAllVideogames())
-  // }, [dispatch])
   
   return (
     <BrowserRouter>
@@ -28,6 +25,7 @@ function App() {
         <Route exact path="/home" component={Home}/>
         <Route exact path="/home/:id" component={Detail}/>
         <Route exact path="/videogame/" component={Create}/>
+        <Route path={"*"} component={Error404}/>
       </Switch>
       </div>    
     </BrowserRouter>

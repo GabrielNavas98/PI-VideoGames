@@ -2,7 +2,6 @@ import axios from 'axios';
 import { GET_ALL_VIDEOGAMES, GET_GENRES, GET_PLATFORMS, FILTER_BY_GENRES, FILTER_DB_API, ORDER_BY_AZ, ORDER_BY_RATING, GET_VIDEOGAME_NAME, GET_GAME_BY_ID, CREATE_GAME, CLEANDETAIL } from '../Actions_Types/index'
 
 
-
 export function getAllVideogames (){
     return async function(dispatch){
         var json = await axios.get (`http://localhost:3001/videogames`);
@@ -42,7 +41,7 @@ export function getGameName(name) {
                 payload: json.data
             })
         }catch (error) {
-            console.log(error)
+            alert(`no hay juegos con ${name}`)
         }
     } 
 }
@@ -56,8 +55,7 @@ export function getGameId(id) {
                 payload: json.data
             })
         }catch (error) {
-            console.log(error.message)
-            
+            alert(`no hay nada con ${id}`)          
         }
     }
 }
