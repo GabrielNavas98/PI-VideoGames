@@ -17,7 +17,7 @@ const getApiGames = async () => {
             id: game.id,
             name: game.name,
             background_image: game.background_image,
-            genres: game.genres.map(gen => {
+            genres: game.genres && game.genres.map(gen => {
                 return {
                     id: gen.id,
                     name: gen.name
@@ -25,7 +25,7 @@ const getApiGames = async () => {
             }),
             released: game.released,
             rating: game.rating,
-            platform: game.parent_platforms.map(elem => {
+            platform: game.parent_platforms && game.parent_platforms.map(elem => {
                 return {
                     id: elem.platform.id,
                     name: elem.platform.name                    
@@ -74,7 +74,7 @@ const getGamesName = async (name) => {
             id: game.id,
             name: game.name,
             background_image: game.background_image,
-            genres: game.genres.map(gen => {
+            genres: game.genres && game.genres.map(gen => {
                 return {
                     id: gen.id,
                     name: gen.name
@@ -82,7 +82,7 @@ const getGamesName = async (name) => {
             }),
             released: game.released,
             rating: game.rating,
-            platform: game.parent_platforms.map(elem => {
+            platform: game.platforms && game.platforms.map(elem => {
                 return {
                     id: elem.platform.id,
                     name: elem.platform.name                    

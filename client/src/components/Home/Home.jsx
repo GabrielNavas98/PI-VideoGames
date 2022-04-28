@@ -13,15 +13,18 @@ import Loader from "../Loader/Loader";
 
 export default function Home () {
     const dispatch = useDispatch()
-    const allVideogames = useSelector((state) => state.videoGames) //como mapear las props
+    const allVideogames = useSelector((state) => state.videoGames)
     const allGenres = useSelector((state) => state.genres)
-    
+
     const [order, setOrder] = useState('')
-    const [currentPg, setCurrentPg] = useState(1);
+    const [currentPg, setCurrentPg] = useState(1);//seteo la pagina a renderizar
     const [gamesPerPg, setGamesPerPg] = useState(15); //15 videojuegos por pagina
-    const lastGame = currentPg * gamesPerPg;
+    
+    
+    
+    const lastGame = currentPg * gamesPerPg; //ultimo juego de la pagina renderizada
     const firstGame = lastGame - gamesPerPg;
-    const currentGame = allVideogames.slice(firstGame, lastGame)
+    const currentGame = allVideogames.slice(firstGame, lastGame)//juegos renderizados por pagina
 
     const paginado = (pgNumber) => {
         setCurrentPg(pgNumber)
@@ -34,21 +37,17 @@ export default function Home () {
         // console.log(allVideogames)
     }, [dispatch])
     
-    //---button refresh-----
-    // function handleClick(e){
-    //     e.preventDefault();
-    //     dispatch(getAllVideogames());
-    //     dispatch(getGenres())
-    // }
 
     function handleFilterGenres(e){
         e.preventDefault();
+        setCurrentPg(1)
         dispatch(filterByGenres(e.target.value))
         // console.log(e.target.value)
     }
     
     function handleFilterDbApi(e){
         e.preventDefault();
+        setCurrentPg(1)
         dispatch(filterByDbApi(e.target.value))
     }
 
@@ -56,16 +55,15 @@ export default function Home () {
         e.preventDefault();
         dispatch(orderByAZ(e.target.value));
         setCurrentPg(1); //setea la primera pagina
-        setOrder(`Ordenado ${e.target.value}`)
+        setOrder(`Ordenado Alfabeticamente ${e.target.value}`)
     }
 
     function handleOrderRating(e){
         e.preventDefault();
         dispatch(orderByRating(e.target.value))
         setCurrentPg(1); //setea la primera pagina
-        setOrder(`Ordenado ${e.target.value}`)
+        setOrder(`Ordenado Rating ${e.target.value}`)
     }
-
 
     return(
         <div>
@@ -73,12 +71,14 @@ export default function Home () {
             <div className={style.order}>
                 
                 <select onChange={e => handleFilterDbApi(e)}>
+                    <option value="none" selected disabled hidden>Store</option>
                     <option value='all'>All</option>
                     <option value='db'>DataBase</option>
                     <option value='api'>API</option>
                 </select>
                 
                 <select onChange={e => handleFilterGenres(e)}>
+                    <option value="none" selected disabled hidden>Genres</option>
                     <option value='all'>All</option>
                     {
                         allGenres?.map(gen => {
@@ -95,33 +95,38 @@ export default function Home () {
                 </select>
 
                 <select onChange={e => handleOrderRating(e)}>
-                    <option value= 'asc'>asc</option>
-                    <option value= 'desc'>desc</option>
+                    <option value="none" selected disabled hidden>Rating</option>
+                    <option value= 'asc'>Asc</option>
+                    <option value= 'desc'>Desc</option>
                 </select>
-
+                <div>
+                    <p>{order}</p>
+                </div>
             </div>
             <Paginado 
                 gamesPerPg = {gamesPerPg}
                 allVideogames = {allVideogames.length}
                 paginado= {paginado}
                 currentPg = {currentPg}
+                setCurrentPg= {setCurrentPg}
             />            
-            {
+            {  
                 currentGame && currentGame.length ?
                     <div className={style.cards}>
                         {
                             currentGame.map(game => {
                                 return(
                                     <div key={game.id}>
-                                        <Link to={`/home/${game.id}`} >  
+                                        <Link to={`/home/${game.id}`} className={style.links} >  
                                             <VideogameCard
                                                 name={game.name}
                                                 img={game.background_image}
                                                 id={game.id}
                                                 genres={game.genres.map(gen => gen.name).join(", ")}
                                                 key={game.id}
+                                                rating={game.rating}
                                             />                                                           
-                                        </Link>
+                                        </Link> 
                                     </div>
                                 )
                             })
@@ -129,7 +134,6 @@ export default function Home () {
                     </div>: 
                 <Loader/>
             }
-            
         </div>
     )
 }

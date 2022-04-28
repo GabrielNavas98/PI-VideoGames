@@ -12,6 +12,12 @@ export function getAllVideogames (){
     }
 }
 
+// export const getGenres = () => {
+//     return fetch('http://localhost:3000/genres')
+//         .then(responsive => responsive.json())
+//         .then(json => dispatch({ type: GET_GENRES, payload: json}))
+// }
+
 export function getGenres (){
     return async function (dispatch){
         var json = await axios.get(`/genres`);

@@ -2,10 +2,12 @@ const { Router } = require('express')
 const { Videogame, Genre, Platform} = require('../db');
 const router = Router();
 
-
 router.post('/', async (req, res) => {
-    const { name, description, released, rating, platforms, genres, background_image, inBd } = req.body;
+    let { name, description, released, rating, platforms, genres, background_image, inBd } = req.body;
     //console.log(name)
+    if(!background_image){
+        background_image = 'https://cdn.icon-icons.com/icons2/2483/PNG/512/defect_analysis_icon_149951.png'
+    }
     
     try{
     const gameCreated = await  Videogame.create({

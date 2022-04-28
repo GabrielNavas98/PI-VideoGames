@@ -10,7 +10,10 @@
     
     
 }
-
+.order p{
+    width: 300px;
+    color: #ffff;
+}
 
 
 .navBar{
@@ -18,4 +21,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 30px 10%;
+}
+
+.links:focus, .links:visited, .links:link, .links:active, .links:focus, .links:hover {
+    text-decoration: none;
+    
 }

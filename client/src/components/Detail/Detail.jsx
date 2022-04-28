@@ -39,7 +39,7 @@ export default function Detail (props){
                                 myGameDetail.genres ?
                                 <div>
                                     <ul>
-                                        Generos: 
+                                        Genres: 
                                             {myGameDetail.genres.map(gen => {
                                                 return (
                                                     <li key={gen.id}>{gen.name}</li>

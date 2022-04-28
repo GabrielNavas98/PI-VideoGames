@@ -39,7 +39,7 @@ const rootReducer = (state = initialState, action) => {
             }
 
         case FILTER_BY_GENRES:
-            const allVideoGames = state.allVideoGames;
+            const videoGames = state.videoGames;
             var genFilter = function(arr) {
                 var aux = arr.filter(e => e.name === action.payload)
                 if(aux.length > 0){
@@ -50,17 +50,16 @@ const rootReducer = (state = initialState, action) => {
                     return false
                 }
             }
-            var filtrados = action.payload === 'all' ? allVideoGames : allVideoGames.filter(e => genFilter(e.genres)) //filtro el state que siempre tiene 
+            var filtrados = action.payload === 'all' ? state.allVideoGames : videoGames.filter(e => genFilter(e.genres)) //filtro el state que siempre tiene 
             //console.log(filtrados)
             //si no hay juegos con el genero creo un detalle
             if(filtrados.length === 0){
                 filtrados = [{
                     id: 5050505050,
-                    name: '404 not found Game with this Genre',
-                    background_image: 'https://cdn.dribbble.com/users/1864713/screenshots/16840895/image_processing20211111-19258-d9egog_4x.gif?compress=1&resize=400x300',
+                    name: 'Not games with this genre',
+                    background_image: 'https://cms-assets.tutsplus.com/cdn-cgi/image/width=600/uploads/users/30/posts/25489/image/pf.jpg',
                     genres:[{id: 404, name:'NotFound'}],
-                    released: '02/02/1998',
-                    rating: 5,
+                    rating: 404,
                     platforms: [{id: 404, name:'NotFound'}],
                 }]
             }

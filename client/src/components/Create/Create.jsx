@@ -25,10 +25,12 @@ export function validate(input){
         //console.log(input.platforms.length)
     }
     
-    if (input.rating > 5 || input.rating < 0 ){
+    if(!input.rating){
+        errors.rating = 'Rating is required'
+    }else if (input.rating > 5 || input.rating < 0 ){
         errors.rating = 'Rating must be in range 0-5'
     } 
-    
+    //console.log(errors)
     return errors
 }
 
@@ -203,7 +205,8 @@ export default function Create () {
                             <img src='https://static.thenounproject.com/png/3322766-200.png' alt=''  className={style.bg_img}/>
                     }
             </div>
-            <div className={style.subBox}>
+
+            <div className={style.gen}>
                 <select onChange={(e) => handleSelectGenres(e)} className= {style.select} placeholder='Genres: ' multiple>
                     {
                         genres?.map(gen => {
@@ -213,19 +216,20 @@ export default function Create () {
                         })
                     }
                 </select>
-               <div>
-               <ul className={style.bg_img}>
-                {
-                        input.genres?.map(gen => {
-                        return(
-                            <li key={gen}>{gen}</li>
-                        )
-                    })
-                }
-                </ul>
+                <div>
+                    <ul className={style.list}>
+                    {
+                            input.genres?.map(gen => {
+                            return(
+                                <li key={gen}>{gen}</li>
+                            )
+                        })
+                    }
+                    </ul>
                </div>
             </div>
-            <div className={style.subBox}>
+
+            <div className={style.gen}>
                 <select onChange={(e) => handleSelectPlatforms(e)} className= {style.select} multiple>
                     {
                         platforms?.map(plat => {
@@ -235,19 +239,18 @@ export default function Create () {
                         })                    
                     }
                 </select>
-                <div className={style.bg_img}>
-                {
-                    errors.platforms ? <p>{errors.plataforms}</p>:
-                    <ul>
-                    {
-                        input.platforms?.map(plat => {
-                                return (
-                                    <li key={plat}>{plat}</li>
-                                )  
-                                })
-                    }
+                <div>
+                    <ul className={style.list}>
+                        {
+                            errors.platforms?
+                                <li className={style.errP}>{errors.platforms}</li>:
+                            input.platforms?.map(plat => {
+                                    return (
+                                        <li key={plat}>{plat}</li>
+                                    )  
+                                    })
+                        }
                     </ul>
-                }
                 </div>
             </div>
             <button className={style.submit} type= 'submit' disabled={!input.name || !input.description || !input.rating || !input.platforms.length || errors.rating || errors.description || errors.platforms}>Create</button>

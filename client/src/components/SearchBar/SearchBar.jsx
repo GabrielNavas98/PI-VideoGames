@@ -31,12 +31,14 @@ export default function SearchBar () {
                 type='text'
                 placeholder= 'Search...'
                 onChange={(e) => handleInputChange(e)}
-                onClick={e => handleSubmit(e)} onKeyPress={(e => {
-                    if(e.key === 'Enter') dispatch(getGameName(name))  
+                onKeyPress={(e => {
+                    if(e.key === 'Enter'){
+                        dispatch(getGameName(name))
+                        history.push('/home')
+                    }    
                 })}
             />
-            <button className={style.btn} type="submit" ><img src={lupa} alt=''/></button>
-            
+            <button className={style.btn} type="submit" onClick={e => handleSubmit(e)} ><img src={lupa} alt=''/></button>
         </div>
     )
 }

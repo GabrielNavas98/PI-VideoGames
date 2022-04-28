@@ -21,7 +21,7 @@ img{
     padding: 20px 10px;
 }
 
-.info>h3{
+.info>h3, .info>h4{
     color: #ffffff;
     font-weight: 600;
     font-size: 18;

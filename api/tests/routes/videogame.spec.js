@@ -16,6 +16,8 @@ describe('Test de routes', () => {
   });
 
   describe('POST /videogame', () => {
+    
+
     it ('responds with 400 if not send name', () => 
       agent.post('/videogame')
         .send({description:'test de routes', released:'02/02/1998', platforms:'PC'})

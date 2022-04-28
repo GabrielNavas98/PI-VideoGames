@@ -3,7 +3,7 @@
     width: 800px;
     padding: 20px;
     position: absolute;
-    top: 70%;
+    top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
     background:#211c1ce3;
@@ -74,7 +74,7 @@ form label{
     width: 200px;
     padding: 8px 12px;
     color: white;
-    background: none;
+    background: #191919;
     border: 2px solid #3498db;
     border-radius: 24px;
     transition: 0.25s;
@@ -102,6 +102,12 @@ form label{
     border-radius: 20px;
 }
 
+.list{
+    width: 150px;
+    position: absolute;
+    border: solid #3498db;
+    border-radius: 20px;
+}
 
 .box ul{
     list-style: none;
@@ -110,4 +116,16 @@ form label{
 .box p {
     color: rgb(161, 45, 45);
     
+}
+.errP{
+    color: rgb(161, 45, 45);
+}
+
+.gen{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    padding: 10px ;
+    margin: 10px;
+    transform: translate(-15%);
 }
